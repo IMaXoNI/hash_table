@@ -98,7 +98,34 @@ hash_table_find(const HashTable *hashtable, const char *key)
 
 }
 
-int hash_table_delete_key(HashTable *hashtable, const char *key);
+int
+hash_table_delete_key(HashTable *hashtable, const char *key)
+{
+    unsigned long hash = hash_table_hash_function(key);
+    unsigned long index = hash % hashtable->size;
+
+    Node *node_ptr = hashtable->table[index];
+
+    while (strcmp(node_ptr->key, key) != 0)
+    {
+        if (node_ptr->next == NULL)
+        {
+            return -1;
+        }
+        node_ptr = node_ptr->next;
+    }
+
+    if (node_ptr->next != NULL)
+    {
+        node_ptr->next->prev = node_ptr->prev;
+    }
+
+    node_ptr->prev->next = node_ptr->next;
+    free(node_ptr->key);
+    free(node_ptr->value);
+    free(node_ptr);
+
+}
 
 void hash_table_destroy_table(HashTable* hashtable);
 
