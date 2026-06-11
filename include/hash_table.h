@@ -7,8 +7,8 @@ typedef struct Node
 {
     char *key;
     char *value;
-    Node *next;
-    Node *prev;
+    struct Node *next;
+    struct Node *prev;
 } Node;
 
 typedef struct HashTable
