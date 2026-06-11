@@ -16,7 +16,7 @@ hash_table_create(size_t size)
         return NULL;
     }
 
-    HashTable* hashtable = malloc(sizeof(HashTable));
+    hashtable = malloc(sizeof(*hashtable));
     if (hashtable == NULL)
     {
         return NULL;
@@ -41,10 +41,10 @@ hash_table_insert(HashTable *hashtable, const char *key, const char *value)
         return -1;
     }
 
-    Node *node_ptr = hashtable->table[index];
+    node_ptr = hashtable->table[index];
     if (node_ptr == NULL)
     {
-        node_ptr == malloc(sizeof(*node_ptr));
+        node_ptr = malloc(sizeof(*node_ptr));
         
         if (node_ptr == NULL)
         {
@@ -66,7 +66,7 @@ hash_table_insert(HashTable *hashtable, const char *key, const char *value)
             node_ptr = node_ptr->next;
         }
 
-        next_node_ptr == malloc(sizeof(*next_node_ptr));
+        next_node_ptr = malloc(sizeof(*next_node_ptr));
         if (next_node_ptr == NULL)
         {
             return -1;
@@ -100,7 +100,7 @@ hash_table_find(const HashTable *hashtable, const char *key)
         return NULL;
     }
 
-    Node *node_ptr = hashtable->table[index];
+    node_ptr = hashtable->table[index];
 
     if (node_ptr == NULL)
     {
@@ -132,7 +132,7 @@ hash_table_delete_key(HashTable *hashtable, const char *key)
         return -1;
     }
     
-    Node *node_ptr = hashtable->table[index];
+    node_ptr = hashtable->table[index];
     
     while (strcmp(node_ptr->key, key) != 0)
     {
