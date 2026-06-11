@@ -18,9 +18,10 @@ typedef struct HashTable
 } HashTable;
 
 HashTable* hash_table_create(size_t size);
-int hash_table_insert(HashTable *table, const char *key, const char *value);
-const char* hash_table_find(const HashTable *table, const char *key);
-int hash_table_delete_key(HashTable *table, const char *key);
-void hash_table_destroy_table(HashTable* table);
+int hash_table_insert(HashTable *hashtable, const char *key, const char *value);
+const char* hash_table_find(const HashTable *hashtable, const char *key);
+int hash_table_delete_key(HashTable *hashtable, const char *key);
+void hash_table_destroy_table(HashTable* hashtable);
+int hash_table_hash_function(const char *key);
 
 #endif
