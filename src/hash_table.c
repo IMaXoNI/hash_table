@@ -64,6 +64,8 @@ hash_table_insert(HashTable *hashtable, const char *key, const char *value)
 
         next_node_ptr->value = malloc(strlen(value) + 1);
         strcpy(next_node_ptr->value, value);
+
+        next_node_ptr->next = NULL;
     }
 
     return 0;
@@ -82,7 +84,7 @@ hash_table_find(const HashTable *hashtable, const char *key)
     {
         return NULL;
     }
-    
+
     while (strcmp(node_ptr->key, key) != 0)
     {
         if (node_ptr->next == NULL)
