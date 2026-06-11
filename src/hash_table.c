@@ -24,6 +24,8 @@ hash_table_create(size_t size)
 
     hashtable->table = calloc(size, sizeof(Node*));
     hashtable->size = size;
+
+    return hashtable;
 }
 
 int
@@ -152,6 +154,8 @@ hash_table_delete_key(HashTable *hashtable, const char *key)
     free(node_ptr->key);
     free(node_ptr->value);
     free(node_ptr);
+
+    return 0;
 
 }
 
