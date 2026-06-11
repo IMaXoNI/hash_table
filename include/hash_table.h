@@ -22,6 +22,5 @@ int hash_table_insert(HashTable *hashtable, const char *key, const char *value);
 const char* hash_table_find(const HashTable *hashtable, const char *key);
 int hash_table_delete_key(HashTable *hashtable, const char *key);
 void hash_table_destroy_table(HashTable* hashtable);
-unsigned long hash_table_hash_function(const char *key);
 
 #endif
