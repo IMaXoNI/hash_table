@@ -1,0 +1,91 @@
+#include "hash_table.h"
+#include <stdlib.h>
+#include <string.h>
+
+#define HASH 123
+
+static unsigned long hash_table_hash_function(const char *key);
+
+HashTable*
+hash_table_create(size_t size)
+{
+    HashTable* hashtable = malloc(sizeof(HashTable));
+    if (hashtable == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+    hashtable->table = calloc(size, sizeof(Node*));
+    hashtable->size = size;
+}
+
+int
+hash_table_insert(HashTable *hashtable, const char *key, const char *value)
+{
+    unsigned long hash = hash_table_hash_function(key);
+    unsigned long index = hash % hashtable->size;
+    Node *node_ptr = hashtable->table[index];
+    Node *next_node_ptr = NULL;
+
+    if (node_ptr == NULL)
+    {
+        node_ptr == malloc(sizeof(*node_ptr));
+        
+        if (node_ptr == NULL)
+        {
+            return -1;
+        }
+
+        node_ptr->key = malloc(strlen(key) + 1);
+        strcpy(node_ptr->key, key);
+
+        node_ptr->value = malloc(strlen(value) + 1);
+        strcpy(node_ptr->value, value);
+
+        node_ptr->next=NULL;
+        node_ptr->prev=NULL;
+    } else
+    {   
+        while(node_ptr->next != NULL)
+        {
+            node_ptr = node_ptr->next;
+        }
+
+        next_node_ptr == malloc(sizeof(*next_node_ptr));
+        if (next_node_ptr == NULL)
+        {
+            return -1;
+        }
+
+        node_ptr->next = next_node_ptr;
+        next_node_ptr->prev = node_ptr;
+
+        next_node_ptr->key = malloc(strlen(key) + 1);
+        strcpy(next_node_ptr->key, key);
+
+        next_node_ptr->value = malloc(strlen(value) + 1);
+        strcpy(next_node_ptr->value, value);
+    }
+
+    return 0;
+    
+}
+
+const char* hash_table_find(const HashTable *hashtable, const char *key);
+
+int hash_table_delete_key(HashTable *hashtable, const char *key);
+
+void hash_table_destroy_table(HashTable* hashtable);
+
+static unsigned long
+hash_table_hash_function(const char *key)
+{
+    unsigned long hash = HASH;
+    int c;
+
+    while ((c = *key++))
+    {
+        hash = ((hash << 5) + hash) + c;
+    }
+
+    return hash;
+}
