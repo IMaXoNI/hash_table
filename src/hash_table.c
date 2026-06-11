@@ -6,7 +6,7 @@
 
 static unsigned long hash_table_hash_function(const char *key);
 
-HashTable*
+HashTable *
 hash_table_create(size_t size)
 {
     HashTable* hashtable = malloc(sizeof(HashTable));
@@ -70,7 +70,31 @@ hash_table_insert(HashTable *hashtable, const char *key, const char *value)
     
 }
 
-const char* hash_table_find(const HashTable *hashtable, const char *key);
+const char *
+hash_table_find(const HashTable *hashtable, const char *key)
+{
+    unsigned long hash = hash_table_hash_function(key);
+    unsigned long index = hash % hashtable->size;
+
+    Node *node_ptr = hashtable->table[index];
+
+    if (node_ptr == NULL)
+    {
+        return NULL;
+    }
+    
+    while (strcmp(node_ptr->key, key) != 0)
+    {
+        if (node_ptr->next == NULL)
+        {
+            return NULL;
+        }
+        node_ptr = node_ptr->next;
+    }
+
+    return node_ptr->value;
+
+}
 
 int hash_table_delete_key(HashTable *hashtable, const char *key);
 
