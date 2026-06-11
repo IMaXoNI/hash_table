@@ -166,7 +166,7 @@ hash_table_destroy_table(HashTable* hashtable)
     Node * node_ptr;
 
     int i;
-    int hashtable_size = hashtable_size;
+    int hashtable_size = hashtable->size;
 
     if (hashtable == NULL)
     {
