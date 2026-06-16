@@ -59,6 +59,8 @@ hash_table_insert(HashTable *hashtable, const char *key, const char *value)
 
         node_ptr->next=NULL;
         node_ptr->prev=NULL;
+
+        hashtable->table[index] = node_ptr;
     } else
     {   
         while(node_ptr->next != NULL)
