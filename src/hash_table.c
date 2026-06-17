@@ -22,7 +22,14 @@ hash_table_create(size_t size)
         return NULL;
     }
 
-    hashtable->table = calloc(size, sizeof(Node*));
+    hashtable->table = calloc(size, sizeof(Node*));\
+
+    if (hashtable->table == NULL)
+    {
+        free(hashtable);
+        return NULL;
+    }
+
     hashtable->size = size;
 
     return hashtable;
