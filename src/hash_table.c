@@ -142,6 +142,11 @@ hash_table_delete_key(HashTable *hashtable, const char *key)
     }
     
     node_ptr = hashtable->table[index];
+
+    if (node_ptr == NULL)
+    {
+        return -1;
+    }
     
     while (strcmp(node_ptr->key, key) != 0)
     {
@@ -150,6 +155,11 @@ hash_table_delete_key(HashTable *hashtable, const char *key)
             return -1;
         }
         node_ptr = node_ptr->next;
+    }
+
+    if (node_ptr->prev == NULL)
+    {
+        hashtable->table[index] = node_ptr->next;
     }
 
     if (node_ptr->next != NULL)
@@ -165,7 +175,6 @@ hash_table_delete_key(HashTable *hashtable, const char *key)
     free(node_ptr);
 
     return 0;
-
 }
 
 void
