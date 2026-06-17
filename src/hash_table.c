@@ -197,7 +197,7 @@ hash_table_destroy_table(HashTable* hashtable)
 
         if (node_ptr == NULL)
         {
-            return;
+            continue;
         }
         
         while (node_ptr->next) {
@@ -212,6 +212,9 @@ hash_table_destroy_table(HashTable* hashtable)
         free(node_ptr->value);
         free(node_ptr);
     }
+
+    free(hashtable->table);
+    free(hashtable);
 }
 
 static unsigned long
