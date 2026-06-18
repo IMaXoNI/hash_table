@@ -38,8 +38,8 @@ hash_table_create(size_t size)
 int
 hash_table_insert(HashTable *hashtable, const char *key, const char *value)
 {
-    unsigned long hash = hash_table_hash_function(key);
-    unsigned long index = hash % hashtable->size;
+    unsigned long hash;
+    unsigned long index;
     Node *next_node_ptr = NULL;
     Node *node_ptr;
 
@@ -47,6 +47,9 @@ hash_table_insert(HashTable *hashtable, const char *key, const char *value)
     {
         return -1;
     }
+
+    hash = hash_table_hash_function(key);
+    index = hash % hashtable->size;
 
     node_ptr = hashtable->table[index];
     if (node_ptr == NULL)
@@ -100,14 +103,17 @@ hash_table_insert(HashTable *hashtable, const char *key, const char *value)
 const char *
 hash_table_find(const HashTable *hashtable, const char *key)
 {
-    unsigned long hash = hash_table_hash_function(key);
-    unsigned long index = hash % hashtable->size;
+    unsigned long hash;
+    unsigned long index;
     Node *node_ptr;
 
     if (hashtable == NULL || key == NULL)
     {
         return NULL;
     }
+
+    hash = hash_table_hash_function(key);
+    index = hash % hashtable->size;
 
     node_ptr = hashtable->table[index];
 
@@ -132,14 +138,17 @@ hash_table_find(const HashTable *hashtable, const char *key)
 int
 hash_table_delete_key(HashTable *hashtable, const char *key)
 {
-    unsigned long hash = hash_table_hash_function(key);
-    unsigned long index = hash % hashtable->size;
+    unsigned long hash;
+    unsigned long index;
     Node *node_ptr;
 
     if (hashtable == NULL || key == NULL)
     {
         return -1;
     }
+
+    hash = hash_table_hash_function(key);
+    index = hash % hashtable->size;
     
     node_ptr = hashtable->table[index];
 
@@ -180,16 +189,19 @@ hash_table_delete_key(HashTable *hashtable, const char *key)
 void
 hash_table_destroy_table(HashTable* hashtable)
 {
-    Node ** table_ptr = hashtable->table;
+    Node ** table_ptr;
     Node * node_ptr;
 
     int i;
-    int hashtable_size = hashtable->size;
+    int hashtable_size;
 
     if (hashtable == NULL)
     {
         return;
     }
+
+    hashtable_size = hashtable->size;
+    table_ptr = hashtable->table;
 
     for (i = 0; i < hashtable_size; i++)
     {
